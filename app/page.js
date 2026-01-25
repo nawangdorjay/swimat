@@ -562,6 +562,8 @@ const CampusMart = () => {
   };
 
   // Close mobile menu when clicking outside
+  // click outside logic removed for bug
+  /*
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isMobileMenuOpen && !event.target.closest('.mobile-menu') && !event.target.closest('.mobile-menu-btn')) {
@@ -572,6 +574,7 @@ const CampusMart = () => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isMobileMenuOpen]);
+  */
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -617,7 +620,7 @@ const CampusMart = () => {
             <div className="nav-brand">
               <div className="brand-logo">
                 <div className="logo-container">
-                  <img src="/logo.png" alt="CampusMart" />
+                  <img src="/logo.png" />
                   {!isMobile && <div className="logo-pulse"></div>}
                 </div>
                 <div className="brand-text">
@@ -767,7 +770,7 @@ const CampusMart = () => {
                       <div key={slide.id} className="hero-slide">
                         <div className="hero-slide-content">
                           <div className="hero-slide-image">
-                            <img src={slide.image} alt={`Slide ${slide.id}`} />
+                            <img src={slide.image} />
                             <div className="hero-slide-overlay"></div>
                           </div>
                           <div className="hero-slide-button-container">
@@ -1171,11 +1174,10 @@ const CampusMart = () => {
                         {testimonialImages.slice(slideIndex * 3, slideIndex * 3 + 3).map((testimonial) => (
                           <div key={testimonial.id} className="testimonial-card">
                             <div className="image-container">
-                        <img 
-                          src={testimonial.imageUrl} 
-                          alt={testimonial.title}
-                          className="testimonial-screenshot"
-                        />
+                          <img 
+                            src={testimonial.imageUrl} 
+                            className="testimonial-screenshot"
+                          />
                             </div>
                             <div className="testimonial-overlay">
                               <div className="testimonial-type">{testimonial.type}</div>
