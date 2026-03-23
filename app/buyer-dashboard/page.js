@@ -1097,8 +1097,18 @@ const BuyerDashboard = () => {
     return (
       <div className={`dashboard ${isDarkTheme ? "dark" : "light"}`}>
         <div className="loadingScreen">
-          <Loader2 size={48} className="spinner" />
-          <p>Loading your profile...</p>
+          {/* Skeleton loader replacing spinner for layout stability */}
+          <div style={{ width: '100%', maxWidth: 600, padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div style={{ height: 48, borderRadius: 8, background: 'linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%)', backgroundSize: '200% 100%', animation: 'skeleton-shimmer 1.5s infinite' }} />
+            <div style={{ height: 24, width: '60%', borderRadius: 8, background: 'linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%)', backgroundSize: '200% 100%', animation: 'skeleton-shimmer 1.5s infinite' }} />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+              {[1,2,3].map(i => (
+                <div key={i} style={{ height: 120, borderRadius: 12, background: 'linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%)', backgroundSize: '200% 100%', animation: 'skeleton-shimmer 1.5s infinite' }} />
+              ))}
+            </div>
+            <div style={{ height: 200, borderRadius: 12, background: 'linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%)', backgroundSize: '200% 100%', animation: 'skeleton-shimmer 1.5s infinite' }} />
+          </div>
+          <style>{`@keyframes skeleton-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }`}</style>
         </div>
       </div>
     );

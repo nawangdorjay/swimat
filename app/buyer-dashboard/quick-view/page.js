@@ -2,6 +2,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import {
   X,
   Heart,
@@ -203,18 +204,18 @@ const ProductViewModal = ({
       setUploadedScreenshot(file);
       console.log("📸 Screenshot uploaded:", file.name);
     } else {
-      alert("Please select a valid image file");
+      toast.error("Please select a valid image file");
     }
   };
 
   const handlePaymentSubmit = async () => {
     if (!uploadedScreenshot) {
-      alert("Please upload payment screenshot first");
+      toast.error("Please upload payment screenshot first");
       return;
     }
 
     if (!currentUser || !product) {
-      alert("Missing user or product information");
+      toast.error("Missing user or product information");
       return;
     }
 
@@ -237,7 +238,7 @@ const ProductViewModal = ({
       const token =
         localStorage.getItem("buyerToken") || localStorage.getItem("token");
       if (!token) {
-        alert("Please log in again to continue");
+        toast.error("Please log in again to continue");
         router.push("/buyer-login");
         return;
       }
@@ -260,12 +261,7 @@ const ProductViewModal = ({
 
       console.log("✅ Screenshot uploaded successfully:", result);
 
-      alert(`Order submitted successfully! 
-
-Order ID: ${result.data.orderId}
-Status: Payment verification pending
-
-We will verify your payment and confirm your order shortly. You can track your order status in your dashboard.`);
+      toast.success(`Order submitted! Order ID: ${result.data.orderId} – We will verify your payment shortly.`);
 
       setShowPaymentModal(false);
       setPaymentStep("options");
@@ -286,7 +282,7 @@ We will verify your payment and confirm your order shortly. You can track your o
       }
     } catch (error) {
       console.error("❌ Error submitting payment:", error);
-      alert(`Failed to submit order: ${error.message}`);
+      toast.error(`Failed to submit order: ${error.message}`);
     } finally {
       setSubmittingOrder(false);
     }
@@ -294,12 +290,12 @@ We will verify your payment and confirm your order shortly. You can track your o
 
   const handleBuyNow = () => {
     if (currentUserLoading) {
-      alert("Please wait while we load your profile.");
+      toast.info("Please wait while we load your profile.");
       return;
     }
 
     if (!currentUser) {
-      alert("Please log in to purchase this product.");
+      toast.error("Please log in to purchase this product.");
       router.push("/buyer-login");
       return;
     }
@@ -318,7 +314,7 @@ We will verify your payment and confirm your order shortly. You can track your o
       await navigator.clipboard.writeText(shareUrl);
 
       // Show success message (you can implement a toast notification here)
-      alert("Shareable link copied to clipboard!");
+      toast.success("Shareable link copied to clipboard!");
     } catch (err) {
       console.error("Failed to copy link:", err);
       // Fallback for older browsers
@@ -331,7 +327,7 @@ We will verify your payment and confirm your order shortly. You can track your o
       textArea.select();
       document.execCommand("copy");
       document.body.removeChild(textArea);
-      alert("Shareable link copied to clipboard!");
+      toast.success("Shareable link copied to clipboard!");
     }
   };
 
@@ -373,21 +369,19 @@ We will verify your payment and confirm your order shortly. You can track your o
 
   const handleContactSeller = async () => {
     if (currentUserLoading) {
-      alert(
-        "Your profile is still loading. Please wait a moment and try again."
-      );
+      toast.info("Your profile is still loading. Please wait a moment and try again.");
       return;
     }
 
     if (!currentUser || !currentUser._id) {
-      alert("Please log in to contact the seller.");
+      toast.error("Please log in to contact the seller.");
       router.push("/buyer-login");
       return;
     }
 
     if (!product) {
       console.error("Cannot contact seller: Product info missing.");
-      alert("Product information is unavailable. Please try again later.");
+      toast.error("Product information is unavailable. Please try again later.");
       return;
     }
 
@@ -399,7 +393,7 @@ We will verify your payment and confirm your order shortly. You can track your o
         "Cannot contact seller: Seller ID not found in product data."
       );
       console.log("Product structure:", product);
-      alert("Seller information is unavailable. Please try again later.");
+      toast.error("Seller information is unavailable. Please try again later.");
       return;
     }
 
@@ -408,7 +402,7 @@ We will verify your payment and confirm your order shortly. You can track your o
         localStorage.getItem("buyerToken") || localStorage.getItem("token");
 
       if (!token) {
-        alert("Please log in to contact the seller.");
+        toast.error("Please log in to contact the seller.");
         router.push("/buyer-login");
         return;
       }
@@ -446,23 +440,21 @@ We will verify your payment and confirm your order shortly. You can track your o
 
       if (!conversationId) {
         console.error("No conversation ID returned:", data);
-        alert(
-          "Conversation created but navigation failed. Please check your messages."
-        );
+        toast.error("Conversation created but navigation failed. Please check your messages.");
         return;
       }
 
       router.push(`/buyer-dashboard/messages?chatId=${conversationId}`);
     } catch (error) {
       console.error("Error initiating conversation:", error);
-      alert(`Could not start conversation: ${error.message}`);
+      toast.error(`Could not start conversation: ${error.message}`);
     }
   };
 
   const handleCopyUpiId = async () => {
     try {
       await navigator.clipboard.writeText("8750471736@ptsbi");
-      alert("UPI ID copied to clipboard!");
+      toast.success("UPI ID copied to clipboard!");
     } catch (error) {
       console.error("Failed to copy UPI ID:", error);
       const textArea = document.createElement("textarea");
@@ -471,7 +463,7 @@ We will verify your payment and confirm your order shortly. You can track your o
       textArea.select();
       document.execCommand("copy");
       document.body.removeChild(textArea);
-      alert("UPI ID copied to clipboard!");
+      toast.success("UPI ID copied to clipboard!");
     }
   };
 
@@ -1186,7 +1178,7 @@ We will verify your payment and confirm your order shortly. You can track your o
                   />
                   <button
                     onClick={() => {
-                      alert("Report submitted. We will review this listing.");
+                      toast.success("Report submitted. We will review this listing.");
                       setShowReportModal(false);
                     }}
                     className="submit-report-btn"

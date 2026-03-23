@@ -6,7 +6,10 @@ import { listingsAPI } from '../../utils/api';
 import { useImageUpload } from '../../../hooks/useImageUpload';
 import colleges from '../../utils/colleges';
 import { useCollege } from '../../../components/contexts/CollegeContext';
-import styles from './CreateListing.module.css'; 
+import styles from './CreateListing.module.css';
+
+// Strip HTML tags to prevent XSS when content is stored or later rendered
+const sanitizeText = (str) => (str || '').replace(/<[^>]*>/g, '').replace(/[<>]/g, '');
 
 const CreateListing = () => {
   const router = useRouter();
@@ -277,14 +280,14 @@ const CreateListing = () => {
     try {
       // Enhanced mobile device handling - ensure all data is properly formatted
       const processedFormData = {
-        title: formData.title.trim(),
-        description: formData.description.trim(),
+        title: sanitizeText(formData.title.trim()),
+        description: sanitizeText(formData.description.trim()),
         price: parseFloat(formData.price),
         originalPrice: formData.originalPrice ? parseFloat(formData.originalPrice) : null,
         condition: formData.condition,
         category: formData.category,
         subcategory: formData.subcategory || '',
-        location: formData.location.trim(),
+        location: sanitizeText(formData.location.trim()),
         college: formData.college || '',
         tags: formData.tags || [],
         images: []

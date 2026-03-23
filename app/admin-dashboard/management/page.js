@@ -1679,7 +1679,6 @@ export default function AdminManagementPage() {
 // Listing Details Modal (inline component styles)
 // Rendered conditionally within the main component return above
 // Inject the modal at the bottom to avoid layout shifts
-// eslint-disable-next-line react/display-name
 export function ListingDetailsModal({ open, listing, onClose, getImageUrl }) {
   if (!open || !listing) return null;
   return (
