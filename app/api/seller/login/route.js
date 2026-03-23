@@ -99,13 +99,7 @@ export async function POST(req) {
         name: seller.name,
         role: 'seller' // ✅ Add the missing role field
       },
-      process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '30d' }
-    );
-
-    // Update last login time (optional)
-    try {
-      await sellers.updateOne(
+      process.env.JWT_SECRET,
         { _id: seller._id }, 
         { $set: { lastLogin: new Date() } }
       );

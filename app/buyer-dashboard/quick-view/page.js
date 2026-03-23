@@ -734,9 +734,10 @@ We will verify your payment and confirm your order shortly. You can track your o
                 <div className="details-left">
                   <h3 className="text-lg font-semibold mb-2">Description</h3>
                   <div 
-                    className="text-gray-600 leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: product.description }}
-                  />
+                    className="text-gray-600 leading-relaxed whitespace-pre-wrap"
+                  >
+                    {product.description}
+                  </div>
 
                   {product.views && (
                     <div className="product-stats">
