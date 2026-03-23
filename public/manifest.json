@@ -1,0 +1,26 @@
+{
+  "name": "CampusMart – Student Marketplace",
+  "short_name": "CampusMart",
+  "description": "Buy, sell, and get assignment help from verified students on your campus.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/fav.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/fav.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "education"],
+  "lang": "en-IN"
+}

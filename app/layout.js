@@ -1,10 +1,34 @@
 import './global.css';
 import Script from "next/script";
 import ClientProviders from '../components/ClientProviders';
+import { Toaster } from 'sonner';
 
 export const metadata = {
-  title: 'CampusMart',
-  description: 'Your campus marketplace',
+  title: 'CampusMart – Student Marketplace',
+  description: 'Buy, sell, and get assignment help from verified students on your campus. CampusMart is your trusted campus marketplace.',
+  openGraph: {
+    title: 'CampusMart – Student Marketplace',
+    description: 'Buy, sell, and get assignment help from verified students on your campus.',
+    url: 'https://campusmart.store',
+    siteName: 'CampusMart',
+    images: [
+      {
+        url: 'https://campusmart.store/fav.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'CampusMart – Student Marketplace',
+      },
+    ],
+    type: 'website',
+    locale: 'en_IN',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CampusMart – Student Marketplace',
+    description: 'Buy, sell, and get assignment help from verified students on your campus.',
+    images: ['https://campusmart.store/fav.jpg'],
+  },
+  manifest: '/manifest.json',
   icons: {
     icon: '/fav.jpg',
     shortcut: '/fav.jpg',
@@ -31,7 +55,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="google-adsense-account" content="ca-pub-8234149876760532" />
         <Script
@@ -41,10 +65,11 @@ export default function RootLayout({ children }) {
           strategy="afterInteractive"
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <ClientProviders>
           {children}
         </ClientProviders>
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

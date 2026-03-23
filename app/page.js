@@ -9,6 +9,7 @@ import {
   Sun,
   Moon,
   ArrowRight,
+  ArrowUp,
   Users,
   Shield,
   Zap,
@@ -42,6 +43,7 @@ import {
   Building2,
 } from 'lucide-react';
 import { useCollege } from '../components/contexts/CollegeContext';
+import { t } from '../lib/i18n';
 
 const CampusMart = () => {
   const router = useRouter();
@@ -56,6 +58,7 @@ const CampusMart = () => {
   const [currentProductSlide, setCurrentProductSlide] = useState(0);
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
   const [isSticky, setIsSticky] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   // College context
   const { selectedCollege, setSelectedCollege, colleges } = useCollege();
@@ -562,8 +565,6 @@ const CampusMart = () => {
   };
 
   // Close mobile menu when clicking outside
-  // click outside logic removed for bug
-  /*
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isMobileMenuOpen && !event.target.closest('.mobile-menu') && !event.target.closest('.mobile-menu-btn')) {
@@ -574,7 +575,6 @@ const CampusMart = () => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isMobileMenuOpen]);
-  */
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -588,6 +588,15 @@ const CampusMart = () => {
       document.body.style.overflow = 'unset';
     };
   }, [isMobileMenuOpen]);
+
+  // Show/hide Back to Top button based on scroll position
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Don't render until mounted to prevent hydration mismatch
   if (!mounted) {
@@ -620,12 +629,12 @@ const CampusMart = () => {
             <div className="nav-brand">
               <div className="brand-logo">
                 <div className="logo-container">
-                  <img src="/logo.png" />
+                  <img src="/logo.png" alt="CampusMart logo" />
                   {!isMobile && <div className="logo-pulse"></div>}
                 </div>
                 <div className="brand-text">
-                  <h1 className="brand-name">CampusMart</h1>
-                  {!isMobile && <span className="brand-tagline">Student Marketplace</span>}
+                  <h1 className="brand-name">{t('app_name')}</h1>
+                  {!isMobile && <span className="brand-tagline">{t('tagline')}</span>}
                 </div>
               </div>
             </div>
@@ -770,7 +779,7 @@ const CampusMart = () => {
                       <div key={slide.id} className="hero-slide">
                         <div className="hero-slide-content">
                           <div className="hero-slide-image">
-                            <img src={slide.image} />
+                            <img src={slide.image} alt={slide.buttonText} loading="lazy" />
                             <div className="hero-slide-overlay"></div>
                           </div>
                           <div className="hero-slide-button-container">
@@ -900,7 +909,7 @@ const CampusMart = () => {
                       {featuredProducts.slice(slideIndex * 4, slideIndex * 4 + 4).map((product) => (
                         <div key={product.id} className="trending-product-card">
                           <div className="product-image-container">
-                            <img src={product.image} alt={product.title} className="product-image" />
+                            <img src={product.image} alt={product.title} className="product-image" loading="lazy" />
                             <div className="product-badge">
                               {product.badge}
                             </div>
@@ -1143,7 +1152,7 @@ const CampusMart = () => {
         <div className="testimonials-container">
             <div className="testimonials-header">
               <MessageCircle className="header-icon" size={40} />
-              <h3>Real Student Conversations</h3>
+              <h3>{t('real_student_conversations') || 'Real Student Conversations'}</h3>
               <p className="testimonials-subtitle">Authentic WhatsApp chats showing genuine student experiences on CampusMart</p>
             </div>
 
@@ -1176,7 +1185,9 @@ const CampusMart = () => {
                             <div className="image-container">
                           <img 
                             src={testimonial.imageUrl} 
+                            alt={`Testimonial from student ${testimonial.id}`}
                             className="testimonial-screenshot"
+                            loading="lazy"
                           />
                             </div>
                             <div className="testimonial-overlay">
@@ -1213,16 +1224,16 @@ const CampusMart = () => {
             </div>
 
             <div className="cta-section">
-              <h3>Ready to Start Trading?</h3>
-              <p>Join your campus community today and discover a smarter way to buy and sell.</p>
+              <h3>{t('cta_title')}</h3>
+              <p>{t('cta_desc')}</p>
               <div className="cta-buttons">
                 <button className="btn btn-buyer" onClick={() => handleRoleSelect('buyer')}>
                   <ShoppingBag size={20} />
-                  Start Buying
+                  {t('start_buying')}
                 </button>
                 <button className="btn btn-seller" onClick={() => handleRoleSelect('seller')}>
                   <Store size={20} />
-                  Start Selling
+                  {t('start_selling')}
                 </button>
               </div>
             </div>
@@ -1268,7 +1279,7 @@ const CampusMart = () => {
             {/* Column 1: Brand */}
             <div className="footer-column-zeberai footer-brand-zeberai">
               <div className="footer-logo-zeberai">
-                <span className="logo-ai">CampusMart</span>
+                <span className="logo-ai">{t('app_name')}</span>
               </div>
               <p className="footer-description-zeberai">
                 Your trusted campus marketplace for buying, selling, and getting assignment help from verified students.
@@ -1338,6 +1349,34 @@ const CampusMart = () => {
           </div>
         </div>
       </footer>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Back to top"
+          style={{
+            position: 'fixed',
+            bottom: '2rem',
+            right: '2rem',
+            zIndex: 1000,
+            backgroundColor: 'var(--accent-primary, #6366f1)',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '50%',
+            width: '3rem',
+            height: '3rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            transition: 'opacity 0.3s ease',
+          }}
+        >
+          <ArrowUp size={20} />
+        </button>
+      )}
     </>
   );
 };

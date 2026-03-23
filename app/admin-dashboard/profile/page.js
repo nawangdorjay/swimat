@@ -146,7 +146,7 @@ export default function AdminProfilePage() {
       setError('Phone number is required');
       return false;
     }
-    if (form.phone && !/^[\+]?[1-9][\d]{0,15}$/.test(form.phone.replace(/\s/g, ''))) {
+    if (form.phone && !/^[+]?[1-9][\d]{0,15}$/.test(form.phone.replace(/\s/g, ''))) {
       setError('Please enter a valid phone number');
       return false;
     }
