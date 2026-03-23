@@ -562,8 +562,6 @@ const CampusMart = () => {
   };
 
   // Close mobile menu when clicking outside
-  // click outside logic removed for bug
-  /*
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isMobileMenuOpen && !event.target.closest('.mobile-menu') && !event.target.closest('.mobile-menu-btn')) {
@@ -574,7 +572,6 @@ const CampusMart = () => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isMobileMenuOpen]);
-  */
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
