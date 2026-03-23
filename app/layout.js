@@ -5,6 +5,28 @@ import ClientProviders from '../components/ClientProviders';
 export const metadata = {
   title: 'CampusMart',
   description: 'Your campus marketplace',
+  openGraph: {
+    title: 'CampusMart – Student Marketplace',
+    description: 'Buy and sell second-hand goods on your campus. Find textbooks, electronics, furniture and more.',
+    url: 'https://campusmart.in',
+    siteName: 'CampusMart',
+    images: [
+      {
+        url: '/fav.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'CampusMart – Student Marketplace',
+      },
+    ],
+    locale: 'en_IN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CampusMart – Student Marketplace',
+    description: 'Buy and sell second-hand goods on your campus.',
+    images: ['/fav.jpg'],
+  },
   icons: {
     icon: '/fav.jpg',
     shortcut: '/fav.jpg',
