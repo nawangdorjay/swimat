@@ -45,7 +45,7 @@ export async function GET(request, context) {
     let user = null;
     try {
       const jwt = require('jsonwebtoken');
-      const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+      const JWT_SECRET = process.env.JWT_SECRET;
       
       const decoded = jwt.verify(token, JWT_SECRET);
       user = {

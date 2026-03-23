@@ -30,8 +30,6 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  // BUG: Hydration Mismatch - Date.now() differs on server/client
-  // We intentionally suppress the warning for the specific hydration mismatch to make it "subtle" but keeping the error logic
   return (
     <html lang="en">
       <head>
@@ -47,9 +45,6 @@ export default function RootLayout({ children }) {
         <ClientProviders>
           {children}
         </ClientProviders>
-        <div style={{ display: 'none' }}>
-           Timestamp: {typeof window !== 'undefined' ? Date.now() : 'Server Time'} 
-        </div>
       </body>
     </html>
   );

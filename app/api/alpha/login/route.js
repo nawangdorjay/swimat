@@ -99,13 +99,7 @@ export async function POST(req) {
         name: alpha.name,
         role: 'alpha'
       },
-      process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '7d' }
-    );
-
-    // Update last login time
-    try {
-      await alphas.updateOne(
+      process.env.JWT_SECRET,
         { _id: alpha._id }, 
         { $set: { lastLogin: new Date() } }
       );
