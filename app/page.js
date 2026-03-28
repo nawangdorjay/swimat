@@ -63,26 +63,32 @@ const CampusMart = () => {
   const testimonialImages = [
     {
       id: 1,
+      name: "Ananya Goyal",
       imageUrl: "https://ik.imagekit.io/zuxeumnng/Testimonials/ananya%20goyal.jpg?updatedAt=1755797239781"
     },
     {
       id: 2,
+      name: "Student testimonial 2",
       imageUrl: "https://ik.imagekit.io/zuxeumnng/Testimonials/test2.jpg"
     },
     {
       id: 3,
+      name: "Student testimonial 3",
       imageUrl: "https://ik.imagekit.io/zuxeumnng/Testimonials/test3.jpg"
     },
     {
       id: 4,
+      name: "Student testimonial 4",
       imageUrl: "https://ik.imagekit.io/zuxeumnng/Testimonials/test4.jpg"
     },
     {
       id: 5,
+      name: "Student testimonial 5",
       imageUrl: "https://ik.imagekit.io/zuxeumnng/Testimonials/test5.jpg"
     },
     {
       id: 6,
+      name: "Student testimonial 6",
       imageUrl: "https://ik.imagekit.io/zuxeumnng/Testimonials/test6.jpg"
     }
   ];
@@ -343,17 +349,20 @@ const CampusMart = () => {
     {
       id: 1,
       image: "https://ik.imagekit.io/zuxeumnng/campusmart/Asserts/Buy.png?updatedAt=1757882682300",
-      buttonText: "Buy now"
+      buttonText: "Buy now",
+      alt: "Browse and buy second-hand products on CampusMart"
     },
     {
       id: 2,
       image: "https://ik.imagekit.io/zuxeumnng/campusmart/Asserts/Assignment.png?updatedAt=1757927631064",
-      buttonText: "Create Assignment"
+      buttonText: "Create Assignment",
+      alt: "Get assignment help from fellow students"
     },
     {
       id: 3,
       image: "https://ik.imagekit.io/zuxeumnng/campusmart/Asserts/Sell.png?updatedAt=1757920843886",
-      buttonText: "Sell Now"
+      buttonText: "Sell Now",
+      alt: "List and sell your items to other students on campus"
     }
   ];
 
@@ -433,11 +442,14 @@ const CampusMart = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
   // Sticky header functionality
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.pageYOffset;
       setIsSticky(scrollTop > 100);
+      setShowBackToTop(scrollTop > 300);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -562,8 +574,6 @@ const CampusMart = () => {
   };
 
   // Close mobile menu when clicking outside
-  // click outside logic removed for bug
-  /*
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isMobileMenuOpen && !event.target.closest('.mobile-menu') && !event.target.closest('.mobile-menu-btn')) {
@@ -574,7 +584,6 @@ const CampusMart = () => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isMobileMenuOpen]);
-  */
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -620,7 +629,7 @@ const CampusMart = () => {
             <div className="nav-brand">
               <div className="brand-logo">
                 <div className="logo-container">
-                  <img src="/logo.png" />
+                  <img src="/logo.png" alt="CampusMart Logo" />
                   {!isMobile && <div className="logo-pulse"></div>}
                 </div>
                 <div className="brand-text">
@@ -770,7 +779,7 @@ const CampusMart = () => {
                       <div key={slide.id} className="hero-slide">
                         <div className="hero-slide-content">
                           <div className="hero-slide-image">
-                            <img src={slide.image} />
+                            <img src={slide.image} alt={slide.alt} loading="eager" />
                             <div className="hero-slide-overlay"></div>
                           </div>
                           <div className="hero-slide-button-container">
@@ -1176,6 +1185,8 @@ const CampusMart = () => {
                             <div className="image-container">
                           <img 
                             src={testimonial.imageUrl} 
+                            alt={`${testimonial.name}'s testimonial`}
+                            loading="lazy"
                             className="testimonial-screenshot"
                           />
                             </div>
@@ -1338,6 +1349,17 @@ const CampusMart = () => {
           </div>
         </div>
       </footer>
+
+      {/* Back to Top Button */}
+      {showBackToTop && (
+        <button
+          className="back-to-top-btn"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Back to top"
+        >
+          <ChevronLeft size={24} style={{ transform: 'rotate(90deg)' }} />
+        </button>
+      )}
     </>
   );
 };

@@ -1097,8 +1097,16 @@ const BuyerDashboard = () => {
     return (
       <div className={`dashboard ${isDarkTheme ? "dark" : "light"}`}>
         <div className="loadingScreen">
-          <Loader2 size={48} className="spinner" />
-          <p>Loading your profile...</p>
+          <div className="skeleton-profile">
+            <div className="skeleton skeleton-avatar"></div>
+            <div className="skeleton skeleton-line skeleton-line-lg"></div>
+            <div className="skeleton skeleton-line skeleton-line-md"></div>
+          </div>
+          <div className="skeleton-cards">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="skeleton skeleton-card"></div>
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -1695,9 +1703,17 @@ const BuyerDashboard = () => {
           )}
 
           {loading && (
-            <div className="loadingContainer">
-              <Loader2 size={48} className="spinner" />
-              <p>Loading amazing deals...</p>
+            <div className="productsContainer">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="skeleton skeleton-product-card">
+                  <div className="skeleton skeleton-product-img"></div>
+                  <div className="skeleton-product-info">
+                    <div className="skeleton skeleton-line skeleton-line-lg"></div>
+                    <div className="skeleton skeleton-line skeleton-line-md"></div>
+                    <div className="skeleton skeleton-line skeleton-line-sm"></div>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 
